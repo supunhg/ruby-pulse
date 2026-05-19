@@ -4,7 +4,7 @@
 
 ---
 
-## Current Phase: 0 — Application Shell
+## Current Phase: 2 — Memory & CPU Collectors + Real-Time Charts
 
 **Status:** ✅ Complete  
 **Branch:** `dev`
@@ -18,9 +18,9 @@
 | Language | Ruby 3.x | ✅ |
 | UI | GTK4 + libadwaita via `gtk4` + `adwaita` gems (Ruby-GNOME) | ✅ |
 | Persistence | SQLite via `sqlite3` gem | ⏳ |
-| Scheduling | `Concurrent::TimerTask` / background threads | ⏳ |
+| Scheduling | Background threads with `sleep` + event bus | ✅ |
 | Plugin sandbox | TBD (use `isolated` gem or `RubyVM::AbstractSyntaxTree`) | ❌ |
-| Charts | Cairo on `Gtk::DrawingArea` with `Gtk::TickCallback` | ❌ |
+| Charts | Cairo on `Gtk::DrawingArea` with `set_draw_func` | ✅ |
 
 ---
 
@@ -46,11 +46,18 @@
 - [ ] Process detail panel (sidebar or bottom sheet) (next iteration)
 - [ ] Container detection for process grouping (next iteration)
 
-### Phase 2 — Memory, CPU Collectors + Real-Time Charts
-- [ ] Memory collector (`/proc/meminfo`)
-- [ ] CPU collector (`/proc/stat`)
-- [ ] Cairo-based sparkline charts on `Gtk::DrawingArea`
-- [ ] Adaptive refresh rates (e.g., 1s when visible, pause when hidden)
+### Phase 2 — Memory, CPU Collectors + Real-Time Charts ✅
+- [x] CPU collector reading `/proc/stat` with per-core breakdown
+- [x] CPU% delta calculation (idle vs total across samples)
+- [x] Memory collector (already existed, extended with sparkline integration)
+- [x] `ui/charts/sparkline.rb` — reusable Cairo `Gtk::DrawingArea` sparkline widget
+  - Line + fill rendering with configurable colors
+  - Auto-sizing within widget bounds
+  - Configurable data range and max points (default 120)
+- [x] Memory view: total/used/available cards + usage sparkline + swap sparkline
+- [x] CPU view: total % sparkline + per-core grid (4 cols) with individual sparklines
+- [x] 16-cycle core color palette
+- [x] Thread-safe updates via GLib::Idle.add → queue_draw
 
 ### Phase 3 — Rules DSL + Diagnostics Engine
 - [ ] `rule "name" do ... end` DSL parser
@@ -100,7 +107,10 @@ ruby-pulse/
 │   └── notifications/
 ├── collectors/       # Data collectors
 │   ├── process.rb
-│   └── memory.rb
+│   ├── memory.rb
+│   ├── cpu.rb
+│   └── models/
+│       └── process_entity.rb
 ├── diagnostics/      # Diagnostic definitions
 ├── rules/            # Rule definitions
 ├── plugins/          # Third-party plugins

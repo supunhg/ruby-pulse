@@ -12,6 +12,7 @@ require_relative "notifications/handler"
 
 require_relative "../collectors/process"
 require_relative "../collectors/memory"
+require_relative "../collectors/cpu"
 
 require_relative "../ui/application"
 
@@ -42,7 +43,8 @@ module RubyPulse
 
     def register_collectors
       @scheduler.register(Collectors::Process.new, interval: 3)
-      @scheduler.register(Collectors::Memory.new, interval: 3)
+      @scheduler.register(Collectors::Memory.new, interval: 2)
+      @scheduler.register(Collectors::Cpu.new, interval: 2)
     end
   end
 end
