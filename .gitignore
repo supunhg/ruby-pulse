@@ -1,0 +1,27 @@
+# Ruby
+*.gem
+*.rbc
+.bundle
+vendor/bundle
+Gemfile.lock
+
+# Project
+*.db
+*.sqlite
+tmp/
+log/
+data/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Spec
+spec/reports/
+coverage/
