@@ -4,7 +4,7 @@
 
 ---
 
-## Current Phase: 3 — Rules DSL + Diagnostics Engine
+## Current Phase: 4 — SQLite Timeline + Remaining Collectors
 
 **Status:** ✅ Complete  
 **Branch:** `dev`
@@ -69,14 +69,18 @@
 - [x] Overview diagnostics count card
 - [x] Event-driven evaluation on each collector update cycle
 
-### Phase 4 — SQLite Timeline + Remaining Collectors
-- [ ] SQLite schema for session events
-- [ ] Timeline recorder wiring
-- [ ] GPU collector (`nvidia-smi` / `radeontop`)
-- [ ] Thermal collector (`/sys/class/thermal`)
-- [ ] Network collector (`/proc/net/dev`)
-- [ ] Power/Battery collector
-- [ ] Container collector (Docker/Podman/cgroups)
+### Phase 4 — SQLite Timeline + Remaining Collectors ✅
+- [x] `storage/database.rb` — SQLite-backed event store with auto-prune (24h)
+- [x] Timeline recorder now persists diagnostics + periodic telemetry snapshots (every 5 cycles)
+- [x] GPU collector — NVIDIA via `nvidia-smi` or fallback to `/sys/class/drm`
+- [x] Thermal collector — reads all `/sys/class/thermal/thermal_zone*/temp` zones
+- [x] Network collector — `/proc/net/dev` with RX/TX rate calculation (2s delta)
+- [x] Power/Battery collector — `/sys/class/power_supply/BAT*` status, capacity, power draw
+- [x] Container collector — Docker + Podman detection via `docker ps` / `podman ps`
+- [x] GPU view: utilization sparkline, memory, temperature, auto-detection
+- [x] Network view: per-interface rows with RX/TX rates, totals, dual sparklines
+- [x] Power view: charge %, power draw, charging/discharging status
+- [x] Overview: Temperature (hottest CPU zone) + container count cards
 
 ### Phase 5 — Plugin Runtime + Notifications
 - [ ] Isolated plugin loading
@@ -113,6 +117,11 @@ ruby-pulse/
 │   ├── process.rb
 │   ├── memory.rb
 │   ├── cpu.rb
+│   ├── gpu.rb
+│   ├── thermal.rb
+│   ├── network.rb
+│   ├── power.rb
+│   ├── container.rb
 │   └── models/
 │       └── process_entity.rb
 ├── core/
@@ -144,6 +153,7 @@ ruby-pulse/
 │   ├── overlays/
 │   └── themes/
 ├── storage/          # SQLite / persistence
+│   └── database.rb
 ├── assets/
 ├── docs/
 ├── spec/             # RSpec tests

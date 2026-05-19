@@ -13,6 +13,11 @@ require_relative "notifications/handler"
 require_relative "../collectors/process"
 require_relative "../collectors/memory"
 require_relative "../collectors/cpu"
+require_relative "../collectors/gpu"
+require_relative "../collectors/thermal"
+require_relative "../collectors/network"
+require_relative "../collectors/power"
+require_relative "../collectors/container"
 
 require_relative "../ui/application"
 
@@ -46,6 +51,11 @@ module RubyPulse
       @scheduler.register(Collectors::Process.new, interval: 3)
       @scheduler.register(Collectors::Memory.new, interval: 2)
       @scheduler.register(Collectors::Cpu.new, interval: 2)
+      @scheduler.register(Collectors::Gpu.new, interval: 5)
+      @scheduler.register(Collectors::Thermal.new, interval: 5)
+      @scheduler.register(Collectors::Network.new, interval: 2)
+      @scheduler.register(Collectors::Power.new, interval: 5)
+      @scheduler.register(Collectors::Container.new, interval: 10)
     end
 
     def load_rules

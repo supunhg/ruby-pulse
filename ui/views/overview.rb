@@ -43,9 +43,18 @@ module RubyPulse
           @diag_value = Gtk::Label.new("0")
           @diag_value.add_css_class("overview-card-value")
           @diag_value.halign = :start
+          @temp_value = Gtk::Label.new("...")
+          @temp_value.add_css_class("overview-card-value")
+          @temp_value.halign = :start
+          @container_value = Gtk::Label.new("...")
+          @container_value.add_css_class("overview-card-value")
+          @container_value.halign = :start
+
           @process_card = build_card("Processes", @process_value, "utilities-system-monitor-symbolic")
           @memory_card = build_card("Memory", @memory_value, "drive-harddisk-symbolic")
           @diagnostics_card = build_card("Issues", @diag_value, "emblem-important-symbolic")
+          @temp_card = build_card("Temperature", @temp_value, "weather-clear-symbolic")
+          @container_card = build_card("Containers", @container_value, "computer-symbolic")
 
           rebuild_cards
           @box
@@ -84,6 +93,8 @@ module RubyPulse
           @cards.append(@process_card)
           @cards.append(@memory_card)
           @cards.append(@diagnostics_card)
+          @cards.append(@temp_card)
+          @cards.append(@container_card)
         end
 
         def listen_for_updates
@@ -114,6 +125,19 @@ module RubyPulse
             used = total - available
             used_gb = used / 1_048_576.0
             @memory_value.text = format("%.1f GB", used_gb)
+          when :thermal
+            zones = data[:zones] || []
+            cpu_zones = zones.select { |z| z[:type].include?("cpu") || z[:type].include?("x86") }
+            if cpu_zones.any?
+              max_temp = cpu_zones.map { |z| z[:temp_c] }.max
+              @temp_value.text = "#{max_temp}°C"
+            elsif zones.any?
+              @temp_value.text = "#{zones.first[:temp_c]}°C"
+            end
+          when :container
+            containers = data[:containers] || []
+            running = containers.count { |c| c[:running] }
+            @container_value.text = running.to_s
           end
         end
       end
