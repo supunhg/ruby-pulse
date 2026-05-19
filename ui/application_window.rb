@@ -104,6 +104,7 @@ module RubyPulse
         set_content(@toast_overlay)
 
         listen_for_diagnostics
+        listen_for_toasts
         update_status_bar
       end
 
@@ -227,6 +228,18 @@ module RubyPulse
         @event_bus.on :diagnostics_count do |count|
           GLib::Idle.add(GLib::PRIORITY_DEFAULT_IDLE) do
             set_title count > 0 ? "Ruby Pulse (#{count})" : "Ruby Pulse"
+            false
+          end
+        end
+      end
+
+      def listen_for_toasts
+        @event_bus.on :toast do |data|
+          GLib::Idle.add(GLib::PRIORITY_DEFAULT_IDLE) do
+            toast = Adw::Toast.new(data[:message])
+            toast.title = data[:title] if data[:title]
+            toast.timeout = 4
+            @toast_overlay.add_toast(toast)
             false
           end
         end

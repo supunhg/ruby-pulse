@@ -62,3 +62,26 @@ window {
   font-size: 11px;
 }
 
+menu button.flat {
+  border-radius: 0;
+  padding: 6px 12px;
+  min-height: 28px;
+}
+
+menu button.flat:hover {
+  background-color: alpha(currentColor, 0.08);
+}
+
+menu button.flat.destructive-action {
+  color: @error_color;
+}
+
+menu button.flat.destructive-action:hover {
+  background-color: alpha(@error_color, 0.12);
+}
+
+menu separator {
+  margin: 4px 0;
+  background-color: alpha(currentColor, 0.1);
+}
+
