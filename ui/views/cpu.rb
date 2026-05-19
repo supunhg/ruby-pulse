@@ -38,6 +38,7 @@ module RubyPulse
           box.margin_end = 16
           box.margin_top = 16
           box.margin_bottom = 16
+          box.vexpand = true
 
           @total_label = Gtk::Label.new
           @total_label.markup = "<span size='xx-large'>0.0%</span>"
@@ -46,7 +47,9 @@ module RubyPulse
 
           @total_chart = Charts::Sparkline.new(color: CORE_COLORS[0], fill_color: FILL_COLOR)
           @total_chart.set_range(0, 100)
-          @total_chart.height_request = 120
+          @total_chart.height_request = 150
+          @total_chart.vexpand = true
+          @total_chart.hexpand = true
 
           total_frame = Gtk::Frame.new
           total_frame.child = @total_chart
@@ -61,6 +64,8 @@ module RubyPulse
           @core_grid.column_spacing = 12
           @core_grid.row_spacing = 12
           @core_grid.margin_top = 4
+          @core_grid.vexpand = true
+          @core_grid.hexpand = true
           box.append(@core_grid)
 
           box
@@ -75,10 +80,14 @@ module RubyPulse
             color = CORE_COLORS[i % CORE_COLORS.size]
             chart = Charts::Sparkline.new(color: color, fill_color: FILL_COLOR)
             chart.set_range(0, 100)
-            chart.height_request = 60
+            chart.height_request = 100
+            chart.vexpand = true
+            chart.hexpand = true
             @core_charts[i] = chart
 
             vbox = Gtk::Box.new(:vertical, 4)
+            vbox.vexpand = true
+            vbox.hexpand = true
             label = Gtk::Label.new
             label.markup = format("<small>Core %d</small>", i)
             label.halign = :center
