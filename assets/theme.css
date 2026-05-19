@@ -56,3 +56,9 @@ window {
   min-height: 60px;
   min-width: 200px;
 }
+
+.status-bar {
+  border-top: 1px solid alpha(currentColor, 0.08);
+  font-size: 11px;
+}
+

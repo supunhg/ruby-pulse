@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.supunhg.ruby-pulse</id>
+  <name>Ruby Pulse</name>
+  <summary>Linux-native system monitor and diagnostics platform</summary>
+  <developer_name>Supun HG</developer_name>
+  <metadata_license>MIT</metadata_license>
+  <project_license>MIT</project_license>
+  <description>
+    <p>Ruby Pulse is a modern Linux-native system monitor that goes beyond
+    simple metrics to explain system behavior, diagnose performance issues,
+    and provide actionable insight for desktop users and developers.</p>
+  </description>
+  <url type="homepage">https://github.com/supunhg/ruby-pulse</url>
+  <url type="bugtracker">https://github.com/supunhg/ruby-pulse/issues</url>
+  <screenshots>
+    <screenshot type="default">
+      <caption>Main overview</caption>
+    </screenshot>
+  </screenshots>
+  <releases>
+    <release version="0.1.0" date="2026-05-19"/>
+  </releases>
+  <content_rating type="oars-1.1"/>
+</component>

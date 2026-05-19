@@ -145,16 +145,20 @@ module RubyPulse
           update_processes(data) if data
         end
 
-        def format_memory(kb)
-          if kb >= 1_048_576
-            format("%.1f GB", kb / 1_048_576.0)
-          elsif kb >= 1024
-            format("%.1f MB", kb / 1024.0)
-          else
-            format("%d KB", kb)
-          end
+      def focus_search
+        @search_entry.grab_focus if @search_entry
+      end
+
+      def format_memory(kb)
+        if kb >= 1_048_576
+          format("%.1f GB", kb / 1_048_576.0)
+        elsif kb >= 1024
+          format("%.1f MB", kb / 1024.0)
+        else
+          format("%d KB", kb)
         end
       end
     end
   end
+end
 end

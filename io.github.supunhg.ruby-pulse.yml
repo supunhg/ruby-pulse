@@ -1,0 +1,32 @@
+id: io.github.supunhg.ruby-pulse
+runtime: org.gnome.Platform
+runtime-version: "47"
+sdk: org.gnome.Sdk
+command: ruby-pulse
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+  - --filesystem=/proc
+  - --filesystem=/sys
+  - --talk-name=org.freedesktop.systemd1
+  - --talk-name=org.freedesktop.Flatpak
+build-options:
+  append-path: /usr/lib/sdk/ruby/bin
+modules:
+  - name: ruby-pulse
+    buildsystem: simple
+    build-commands:
+      - bundle install --deployment --path /app/lib/vendor
+      - install -Dm755 app/main.rb /app/bin/ruby-pulse
+      - install -Dm644 io.github.supunhg.ruby-pulse.metainfo.xml
+          /app/share/metainfo/io.github.supunhg.ruby-pulse.metainfo.xml
+      - install -Dm644 io.github.supunhg.ruby-pulse.desktop
+          /app/share/applications/io.github.supunhg.ruby-pulse.desktop
+      - install -Dm644 assets/icons/io.github.supunhg.ruby-pulse.svg
+          /app/share/icons/hicolor/scalable/apps/io.github.supunhg.ruby-pulse.svg
+      - cp -r . /app/lib/ruby-pulse
+    sources:
+      - type: dir
+        path: .

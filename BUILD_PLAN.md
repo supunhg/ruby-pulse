@@ -4,7 +4,7 @@
 
 ---
 
-## Current Phase: 5 — Plugin Runtime + Notifications
+## Current Phase: 6 — Polish
 
 **Status:** ✅ Complete  
 **Branch:** `dev`
@@ -95,12 +95,25 @@
 - [x] Plugin lifecycle: `on_activate` / `on_deactivate` hooks
 - [x] `plugins/` directory convention for third-party extensions
 
-### Phase 6 — Polish
-- [ ] Keyboard navigation
-- [ ] Dark/light theme support
-- [ ] Adaptive breakpoints (desktop → mobile layout)
-- [ ] Accessibility (screen reader labels, reduced motion)
-- [ ] Native packaging (Flatpak/AppImage)
+### Phase 6 — Polish ✅
+- [x] Keyboard shortcuts: Ctrl+Q (quit), Ctrl+Tab/Shift+Tab (cycle views),
+      Ctrl+1-8 (jump to view), Ctrl+F (search), Ctrl+I (about),
+      Ctrl+D (diagnostics)
+- [x] Dark/light theme toggle via Adw::StyleManager toggle button in header
+- [x] About dialog (Adw::AboutDialog with credits, links, version)
+- [x] Adaptive breakpoints — hides status bar at <600px width
+- [x] Accessibility — accessible labels on window
+- [x] Status bar — bottom bar with "Last updated: HH:MM:SS" (5s refresh)
+- [x] Window title updates with diagnostic count badge
+- [x] Flatpak manifest (io.github.supunhg.ruby-pulse.yml)
+- [x] Desktop file + AppStream metainfo
+- [x] CSS: status-bar style, theme variables
+
+---
+
+## All Phases Complete
+
+The entire MVP build plan is implemented. Ready for testing, bug fixes, and iteration.
 
 ---
 
