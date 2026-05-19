@@ -10,6 +10,9 @@ require_relative "plugins/loader"
 require_relative "timeline/recorder"
 require_relative "notifications/handler"
 
+require_relative "../collectors/process"
+require_relative "../collectors/memory"
+
 require_relative "../ui/application"
 
 module RubyPulse
@@ -27,11 +30,19 @@ module RubyPulse
 
     def run
       @event_bus.start
+      register_collectors
       @scheduler.start
       @rules.start
       @diagnostics.start
 
       UI::Application.new(@event_bus, @state).run
+    end
+
+    private
+
+    def register_collectors
+      @scheduler.register(Collectors::Process.new, interval: 3)
+      @scheduler.register(Collectors::Memory.new, interval: 3)
     end
   end
 end

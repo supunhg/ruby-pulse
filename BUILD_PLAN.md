@@ -34,12 +34,17 @@
 - [x] Proper GTK main loop integration via signal_connect :activate
 - [x] CSS theming foundation (assets/theme.css)
 
-### Phase 1 — Process Collector + Process Tree
-- [ ] Process collector reading `/proc/[pid]/status`, `/proc/[pid]/stat`
-- [ ] `Gtk::ColumnView` with process list (PID, name, CPU%, RSS, threads)
-- [ ] Tree expansion for parent/child process hierarchy
-- [ ] Sortable columns
-- [ ] Process detail panel (sidebar or bottom sheet)
+### Phase 1 — Process Collector + Process Tree ✅
+- [x] Process collector reading `/proc/[pid]/status`, `/proc/[pid]/stat`, `/proc/[pid]/cmdline`
+- [x] CPU% calculation via delta-based sampling (utime+stime vs total system)
+- [x] `Gtk::ColumnView` with 6 columns: PID, Name, CPU%, RSS, Threads, State
+- [x] Sortable columns with `Gtk::SortListModel` + `Gtk::CustomSorter`
+- [x] Search/filter entry bar
+- [x] Live process count indicator
+- [x] Memory formatting (KB → MB/GB)
+- [ ] Tree expansion for parent/child process hierarchy (next iteration)
+- [ ] Process detail panel (sidebar or bottom sheet) (next iteration)
+- [ ] Container detection for process grouping (next iteration)
 
 ### Phase 2 — Memory, CPU Collectors + Real-Time Charts
 - [ ] Memory collector (`/proc/meminfo`)
