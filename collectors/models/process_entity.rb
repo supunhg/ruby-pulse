@@ -1,6 +1,6 @@
 module RubyPulse
   module Collectors
-    class ProcessEntity < GObject::Object
+    class ProcessEntity < GLib::Object
       type_register
 
       attr_reader :pid, :name, :cpu, :rss, :threads, :state, :ppid

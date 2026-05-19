@@ -1,17 +1,19 @@
+require "monitor"
+
 module RubyPulse
   module Events
     class Bus
       def initialize
         @listeners = Hash.new { |h, k| h[k] = [] }
-        @mutex = Mutex.new
+        @lock = Monitor.new
       end
 
       def on(event, &block)
-        @mutex.synchronize { @listeners[event] << block }
+        @lock.synchronize { @listeners[event] << block }
       end
 
       def emit(event, payload = nil)
-        @mutex.synchronize do
+        @lock.synchronize do
           @listeners[event].each { |listener| listener.call(payload) }
         end
       end

@@ -4,7 +4,7 @@ rule "High Swap Usage" do
 
   check do |state|
     mem = state.latest(:memory)
-    return false unless mem && mem[:metrics]
+    next false unless mem && mem[:metrics]
     swap_total = mem[:metrics][:swap_total].to_f
     swap_free = mem[:metrics][:swap_free].to_f
     swap_total > 0 && ((swap_total - swap_free) / swap_total) > 0.50

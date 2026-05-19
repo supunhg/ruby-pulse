@@ -1,5 +1,6 @@
 require "gtk4"
 require "adwaita"
+Adw = Adwaita unless defined?(Adw)
 
 require_relative "events/bus"
 require_relative "state/manager"

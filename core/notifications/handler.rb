@@ -2,9 +2,9 @@ module RubyPulse
   module Notifications
     class Handler
       SEVERITY_PRIORITY = {
-        info: GLib::Notification::Priority::NORMAL,
-        warning: GLib::Notification::Priority::HIGH,
-        error: GLib::Notification::Priority::URGENT
+        info: Gio::NotificationPriority::NORMAL,
+        warning: Gio::NotificationPriority::HIGH,
+        error: Gio::NotificationPriority::URGENT
       }.freeze
 
       SEVERITY_ICONS = {
@@ -33,9 +33,9 @@ module RubyPulse
       end
 
       def send_desktop(diag)
-        notification = GLib::Notification.new(diag.rule_name)
+        notification = Gio::Notification.new(diag.rule_name)
         notification.body = diag.message
-        notification.priority = SEVERITY_PRIORITY[diag.severity] || GLib::Notification::Priority::NORMAL
+        notification.priority = SEVERITY_PRIORITY[diag.severity] || Gio::NotificationPriority::NORMAL
         notification.icon = Gio::ThemedIcon.new(SEVERITY_ICONS[diag.severity])
         @app.send_notification("ruby-pulse-#{diag.rule_name.tr(" ", "-")}", notification)
       end

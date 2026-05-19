@@ -19,8 +19,8 @@ module RubyPulse
           @sort_order = :ascending
 
           @store = Gio::ListStore.new(Collectors::ProcessEntity.gtype)
-          @selection = Gtk::SingleSelection.new(@store)
-          @sort_model = Gtk::SortListModel.new(@selection, nil)
+          @sort_model = Gtk::SortListModel.new(@store, nil)
+          @selection = Gtk::SingleSelection.new(@sort_model)
 
           @widget = build_widget
 
@@ -60,7 +60,7 @@ module RubyPulse
         end
 
         def build_column_view
-          @column_view = Gtk::ColumnView.new(@sort_model)
+          @column_view = Gtk::ColumnView.new(@selection)
           @column_view.hexpand = true
           @column_view.vexpand = true
 

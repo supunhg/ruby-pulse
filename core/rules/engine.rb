@@ -9,7 +9,7 @@ module RubyPulse
         @cooldown = 30
         @check_block = nil
         @message_block = nil
-        @last_fired_at = 0
+        @last_fired_at = Time.at(0)
         @was_active = false
       end
 

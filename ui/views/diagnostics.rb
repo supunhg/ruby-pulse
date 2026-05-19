@@ -47,7 +47,7 @@ module RubyPulse
           header.append(@count_label)
 
           @clear_btn = Gtk::Button.new(label: "Clear All")
-          @clear_btn.signal_connect :clicked { clear_all }
+          @clear_btn.signal_connect(:clicked) { clear_all }
           header.append(@clear_btn)
 
           scrolled = Gtk::ScrolledWindow.new

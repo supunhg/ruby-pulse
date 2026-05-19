@@ -13,7 +13,7 @@ module RubyPulse
       VIEW_KEYS = %i[overview processes memory cpu gpu network power diagnostics].freeze
 
       def initialize(application, event_bus, state)
-        super(application: application)
+        super(application)
         @event_bus = event_bus
         @state = state
 
@@ -39,7 +39,7 @@ module RubyPulse
         @theme_btn.icon_name = "weather-clear-night-symbolic"
         @theme_btn.tooltip_text = "Toggle Dark Mode"
         @theme_btn.valign = :center
-        @theme_btn.signal_connect :toggled { toggle_theme }
+        @theme_btn.signal_connect(:toggled) { toggle_theme }
         header_bar.pack_end(@theme_btn)
 
         @about_btn = Gtk::MenuButton.new
@@ -53,7 +53,7 @@ module RubyPulse
 
         about_item = Gtk::Button.new(label: "About Ruby Pulse")
         about_item.halign = :fill
-        about_item.signal_connect :clicked { show_about }
+        about_item.signal_connect(:clicked) { show_about }
         about_box.append(about_item)
 
         about_menu.child = about_box
@@ -75,11 +75,7 @@ module RubyPulse
         }
 
         @views.each do |key, view|
-          page = Adw::ViewStackPage.new
-          page.title = view.title
-          page.child = view.widget
-          page.icon_name = view.icon_name
-          @view_stack.add(page)
+          @view_stack.add_titled_with_icon(view.widget, key.to_s, view.title, view.icon_name)
         end
 
         view_switcher.stack = @view_stack
@@ -202,13 +198,11 @@ module RubyPulse
       end
 
       def setup_accessibility
-        update_property(Gtk::AccessibleProperty::LABEL, "Ruby Pulse System Monitor")
+        accessible_role = Gtk::AccessibleRole::APPLICATION
       end
 
       def setup_breakpoints
-        bp = Adw::Breakpoint.new(
-          condition: Adw::BreakpointCondition.parse("max-width: 600px")
-        )
+        bp = Adw::Breakpoint.new(Adw::BreakpointCondition.parse("max-width: 600px"))
         bp.signal_connect :apply do
           @status_bar.hide
         end

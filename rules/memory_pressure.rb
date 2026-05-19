@@ -4,7 +4,7 @@ rule "Low Memory" do
 
   check do |state|
     mem = state.latest(:memory)
-    return false unless mem && mem[:metrics]
+    next false unless mem && mem[:metrics]
     total = mem[:metrics][:total].to_f
     available = mem[:metrics][:available].to_f
     total > 0 && (available / total) < 0.10

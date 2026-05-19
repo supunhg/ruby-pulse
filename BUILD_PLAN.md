@@ -111,9 +111,29 @@
 
 ---
 
+## Runtime Bug Fixes (May 19, 2026)
+
+The following fixes were needed to get the app running on Ruby 3.2 + GTK4 4.3.6:
+
+| # | Issue | Fix |
+|---|-------|-----|
+| 1 | `GLib::Notification` doesn't exist | Use `Gio::Notification` instead |
+| 2 | `GObject::Object` base class not found | Use `GLib::Object` (Ruby-GNOME binding) |
+| 3 | `signal_connect :clicked { block }` syntax error | Wrap in parentheses: `signal_connect(:clicked) { block }` |
+| 4 | `Adwaita` module is named `Adwaita`, not `Adw` | Add `Adw = Adwaita` alias |
+| 5 | `Adwaita::ApplicationWindow.new(app:)` keyword broken with GI | Pass positional argument |
+| 6 | `Gtk::ColumnView` requires `Gtk::SelectionModel`, not `SortListModel` | Chain: `ListStore → SortListModel → SingleSelection → ColumnView` |
+| 7 | `Adwaita::ViewStackPage#child=` setter missing | Use `add_titled_with_icon` on the stack |
+| 8 | `update_property` GI binding broken | Simplified to `accessible_role =` |
+| 9 | `Adwaita::Breakpoint.new(condition:)` keyword broken | Pass positional |
+| 10 | `return` in rule `check` blocks (proc context) | Use `next` instead |
+| 11 | `@last_fired_at = 0` vs `Time` comparison | Use `Time.at(0)` |
+| 12 | `Mutex` deadlock from reentrant `emit` calls | Use `Monitor` (reentrant lock) |
+| 13 | GPU temp nil/string comparison crash | Use `.to_f` and safe comparison |
+
 ## All Phases Complete
 
-The entire MVP build plan is implemented. Ready for testing, bug fixes, and iteration.
+The entire MVP build plan is implemented. Tested and running on Ruby 3.2.3 + GTK4 4.3.6.
 
 ---
 

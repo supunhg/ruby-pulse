@@ -4,7 +4,7 @@ rule "Zombie Processes" do
 
   check do |state|
     procs = state.latest(:process)
-    return false unless procs && procs[:processes]
+    next false unless procs && procs[:processes]
     procs[:processes].any? { |p| p.state == "Z" }
   end
 

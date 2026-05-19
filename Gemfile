@@ -3,7 +3,6 @@ source "https://rubygems.org"
 ruby ">= 3.0"
 
 # UI
-gem "gi", "~> 2.0"
 gem "gtk4", "~> 4.0"
 gem "adwaita", "~> 4.0"
 

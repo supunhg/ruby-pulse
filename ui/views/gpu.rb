@@ -110,8 +110,8 @@ module RubyPulse
             @mem_label.text = "N/A"
           end
 
-          temp = metrics[:temperature] || metrics[:temp_c]
-          @temp_label.text = temp&.> 0 ? "#{temp}°C" : "N/A"
+          temp = (metrics[:temperature] || metrics[:temp_c]).to_f
+          @temp_label.text = temp > 0 ? "#{temp}°C" : "N/A"
         end
       end
     end
