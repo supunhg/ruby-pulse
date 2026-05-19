@@ -56,7 +56,24 @@ module RubyPulse
         toolbar_view.add_top_bar(header_bar)
         toolbar_view.content = view_stack
 
-        set_content(toolbar_view)
+        @toast_overlay = Adw::ToastOverlay.new
+        @toast_overlay.child = toolbar_view
+        set_content(@toast_overlay)
+
+        listen_for_diagnostics
+      end
+
+      def listen_for_diagnostics
+        @event_bus.on :diagnostic do |diag|
+          GLib::Idle.add(GLib::PRIORITY_DEFAULT_IDLE) do
+            toast = Adw::Toast.new(diag.message)
+            toast.title = diag.rule_name
+            toast.priority = diag.severity == :error ? :high : :normal
+            toast.timeout = 4
+            @toast_overlay.add_toast(toast)
+            false
+          end
+        end
       end
 
       def apply_theme

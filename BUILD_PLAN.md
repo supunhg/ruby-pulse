@@ -4,7 +4,7 @@
 
 ---
 
-## Current Phase: 4 — SQLite Timeline + Remaining Collectors
+## Current Phase: 5 — Plugin Runtime + Notifications
 
 **Status:** ✅ Complete  
 **Branch:** `dev`
@@ -82,11 +82,18 @@
 - [x] Power view: charge %, power draw, charging/discharging status
 - [x] Overview: Temperature (hottest CPU zone) + container count cards
 
-### Phase 5 — Plugin Runtime + Notifications
-- [ ] Isolated plugin loading
-- [ ] Plugin API (register collectors, rules, UI panels)
-- [ ] In-app notifications
-- [ ] Desktop notifications via libnotify/GLib
+### Phase 5 — Plugin Runtime + Notifications ✅
+- [x] `core/plugins/base.rb` — Plugin base class with `register_collector`, `register_rule`, lifecycle hooks
+- [x] `core/plugins/loader.rb` — Plugin discovery via `**/*plugin.rb`, auto-subclass detection, error isolation
+- [x] `plugins/example/plugin.rb` — Example plugin: uptime collector + weekly reboot rule
+- [x] Desktop notifications via `GLib::Notification` (GNOME Shell integration)
+  - Severity-based priority (info→normal, warning→high, error→urgent)
+  - Themed icons per severity
+- [x] In-app toast notifications via `Adw::ToastOverlay`
+  - Auto-dismissing toasts (4s timeout)
+  - Priority-based appearance (error = :high priority)
+- [x] Plugin lifecycle: `on_activate` / `on_deactivate` hooks
+- [x] `plugins/` directory convention for third-party extensions
 
 ### Phase 6 — Polish
 - [ ] Keyboard navigation
@@ -143,7 +150,9 @@ ruby-pulse/
 │   ├── memory_pressure.rb
 │   ├── zombie_processes.rb
 │   └── high_swap.rb
-├── plugins/          # Third-party plugins
+├── plugins/          # Plugins
+│   └── example/
+│       └── plugin.rb
 ├── ui/               # GTK4 UI layer
 │   ├── windows/
 │   ├── views/

@@ -29,7 +29,7 @@ module RubyPulse
       @scheduler = Scheduler::Runner.new(@event_bus)
       @diagnostics = Diagnostics::Engine.new(@event_bus, @state)
       @rules = Rules::Engine.new(@event_bus, @state)
-      @plugins = Plugins::Loader.new(@event_bus)
+      @plugins = Plugins::Loader.new(@event_bus, @scheduler, @rules)
       @timeline = Timeline::Recorder.new(@event_bus)
       @notifications = Notifications::Handler.new(@event_bus)
     end
@@ -39,10 +39,13 @@ module RubyPulse
       register_collectors
       @scheduler.start
       load_rules
+      load_plugins
       @rules.start
       @diagnostics.start
+      @timeline.start
+      @notifications.start
 
-      UI::Application.new(@event_bus, @state).run
+      UI::Application.new(@event_bus, @state, @notifications).run
     end
 
     private
@@ -63,6 +66,11 @@ module RubyPulse
       Dir["#{rules_dir}/*.rb"].sort.each do |path|
         @rules.instance_eval(File.read(path), path)
       end
+    end
+
+    def load_plugins
+      @plugins.discover
+      @plugins.activate_all
     end
   end
 end
