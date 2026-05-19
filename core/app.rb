@@ -10,6 +10,8 @@ require_relative "plugins/loader"
 require_relative "timeline/recorder"
 require_relative "notifications/handler"
 
+require_relative "../ui/application"
+
 module RubyPulse
   class App
     def initialize
@@ -29,16 +31,7 @@ module RubyPulse
       @rules.start
       @diagnostics.start
 
-      app = Adwaita::Application.new(
-        "io.github.supunhg.ruby-pulse",
-        Gio::ApplicationFlags::FLAGS_NONE
-      )
-
-      app.signal_connect :activate do |application|
-        # UI will be wired here in Phase 3
-      end
-
-      app.run
+      UI::Application.new(@event_bus, @state).run
     end
   end
 end

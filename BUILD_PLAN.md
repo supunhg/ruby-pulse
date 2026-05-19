@@ -6,7 +6,7 @@
 
 ## Current Phase: 0 — Application Shell
 
-**Status:** In progress  
+**Status:** ✅ Complete  
 **Branch:** `dev`
 
 ---
@@ -26,14 +26,13 @@
 
 ## Build Phases
 
-### Phase 0 — Application Shell (current)
-- [ ] `AdwApplication` with app ID `io.github.supunhg.ruby-pulse`
-- [ ] `AdwWindow` with `AdwToolbarView` + `AdwHeaderBar`
-- [ ] `AdwViewSwitcher` in header bar for navigation
-- [ ] `AdwNavigationSplitView` for sidebar + content layout
-- [ ] Create placeholder view pages: Overview, Processes, Memory, CPU, GPU, Network, Power, Diagnostics
-- [ ] Proper GTK main loop integration with event bus
-- [ ] CSS theming foundation
+### Phase 0 — Application Shell ✅
+- [x] `Adw::Application` with app ID `io.github.supunhg.ruby-pulse`
+- [x] `Adw::ApplicationWindow` with `AdwToolbarView` + `AdwHeaderBar`
+- [x] `Adw::ViewSwitcher` in header bar with `Adw::ViewStack`
+- [x] 8 placeholder views: Overview, Processes, Memory, CPU, GPU, Network, Power, Diagnostics
+- [x] Proper GTK main loop integration via signal_connect :activate
+- [x] CSS theming foundation (assets/theme.css)
 
 ### Phase 1 — Process Collector + Process Tree
 - [ ] Process collector reading `/proc/[pid]/status`, `/proc/[pid]/stat`

@@ -1,0 +1,58 @@
+window {
+  background-color: @window_bg_color;
+}
+
+.overview-card {
+  background-color: @card_bg_color;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.overview-card-title {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.overview-card-value {
+  font-size: 32px;
+  font-weight: lighter;
+}
+
+.overview-card-unit {
+  font-size: 14px;
+  color: alpha(currentColor, 0.6);
+}
+
+.process-tree-row {
+  padding: 4px 8px;
+}
+
+.process-tree-row:nth-child(even) {
+  background-color: alpha(currentColor, 0.03);
+}
+
+.diagnostic-warning {
+  background-color: rgba(255, 165, 0, 0.1);
+  border-left: 3px solid orange;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.diagnostic-error {
+  background-color: rgba(255, 0, 0, 0.08);
+  border-left: 3px solid red;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.diagnostic-info {
+  background-color: rgba(0, 120, 255, 0.08);
+  border-left: 3px solid #0078ff;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.chart-sparkline {
+  min-height: 60px;
+  min-width: 200px;
+}
