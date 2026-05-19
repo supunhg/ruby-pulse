@@ -40,8 +40,12 @@ module RubyPulse
 
           @process_value = Gtk::Label.new("...")
           @memory_value = Gtk::Label.new("...")
+          @diag_value = Gtk::Label.new("0")
+          @diag_value.add_css_class("overview-card-value")
+          @diag_value.halign = :start
           @process_card = build_card("Processes", @process_value, "utilities-system-monitor-symbolic")
           @memory_card = build_card("Memory", @memory_value, "drive-harddisk-symbolic")
+          @diagnostics_card = build_card("Issues", @diag_value, "emblem-important-symbolic")
 
           rebuild_cards
           @box
@@ -79,12 +83,20 @@ module RubyPulse
         def rebuild_cards
           @cards.append(@process_card)
           @cards.append(@memory_card)
+          @cards.append(@diagnostics_card)
         end
 
         def listen_for_updates
           @event_bus.on :collector_update do |data|
             GLib::Idle.add(GLib::PRIORITY_DEFAULT_IDLE) do
               update_cards(data)
+              false
+            end
+          end
+
+          @event_bus.on :diagnostics_count do |count|
+            GLib::Idle.add(GLib::PRIORITY_DEFAULT_IDLE) do
+              @diag_value.text = count.to_s
               false
             end
           end

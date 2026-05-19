@@ -33,6 +33,7 @@ module RubyPulse
       @event_bus.start
       register_collectors
       @scheduler.start
+      load_rules
       @rules.start
       @diagnostics.start
 
@@ -45,6 +46,13 @@ module RubyPulse
       @scheduler.register(Collectors::Process.new, interval: 3)
       @scheduler.register(Collectors::Memory.new, interval: 2)
       @scheduler.register(Collectors::Cpu.new, interval: 2)
+    end
+
+    def load_rules
+      rules_dir = File.expand_path("../rules", __dir__)
+      Dir["#{rules_dir}/*.rb"].sort.each do |path|
+        @rules.instance_eval(File.read(path), path)
+      end
     end
   end
 end

@@ -4,7 +4,7 @@
 
 ---
 
-## Current Phase: 2 — Memory & CPU Collectors + Real-Time Charts
+## Current Phase: 3 — Rules DSL + Diagnostics Engine
 
 **Status:** ✅ Complete  
 **Branch:** `dev`
@@ -59,11 +59,15 @@
 - [x] 16-cycle core color palette
 - [x] Thread-safe updates via GLib::Idle.add → queue_draw
 
-### Phase 3 — Rules DSL + Diagnostics Engine
-- [ ] `rule "name" do ... end` DSL parser
-- [ ] Built-in rules: memory leak detection, thermal warning, idle resource waste
-- [ ] Diagnostics panel showing active and historical issues
-- [ ] Event-driven rule evaluation
+### Phase 3 — Rules DSL + Diagnostics Engine ✅
+- [x] `core/rules/engine.rb` — full DSL: `rule`, `severity`, `every` (cooldown), `check`, `message`
+- [x] Built-in rules: High CPU, Low Memory, Zombie Processes, High Swap
+- [x] `core/diagnostics/diagnostic.rb` — Diagnostic data class with severity/timestamp
+- [x] `core/diagnostics/engine.rb` — active tracking, deduplication, resolve support
+- [x] Diagnostics view with severity-colored cards (info/warning/error), icons, timestamps
+- [x] Clear All button
+- [x] Overview diagnostics count card
+- [x] Event-driven evaluation on each collector update cycle
 
 ### Phase 4 — SQLite Timeline + Remaining Collectors
 - [ ] SQLite schema for session events
@@ -111,8 +115,25 @@ ruby-pulse/
 │   ├── cpu.rb
 │   └── models/
 │       └── process_entity.rb
-├── diagnostics/      # Diagnostic definitions
-├── rules/            # Rule definitions
+├── core/
+│   ├── app.rb
+│   ├── events/
+│   ├── state/
+│   ├── scheduler/
+│   ├── diagnostics/
+│   │   ├── diagnostic.rb
+│   │   └── engine.rb
+│   ├── rules/
+│   │   └── engine.rb
+│   ├── plugins/
+│   ├── timeline/
+│   └── notifications/
+├── diagnostics/      # (merged into core/diagnostics/)
+├── rules/            # Built-in rules
+│   ├── high_cpu.rb
+│   ├── memory_pressure.rb
+│   ├── zombie_processes.rb
+│   └── high_swap.rb
 ├── plugins/          # Third-party plugins
 ├── ui/               # GTK4 UI layer
 │   ├── windows/
