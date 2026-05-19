@@ -93,9 +93,9 @@ module RubyPulse
           @power_label.text = power ? format_power(power.to_f / 1_000_000) : "N/A"
 
           @health_label.text = case status.downcase
-                               when "charging" then "⚡ Charging"
-                               when "discharging" then "🔋 Discharging"
-                               when "full" then "✅ Full"
+                               when "charging" then "Charging"
+                               when "discharging" then "Discharging"
+                               when "full" then "Full"
                                else status
                                end
         end
