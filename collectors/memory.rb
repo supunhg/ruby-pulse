@@ -22,7 +22,7 @@ module RubyPulse
 
       def parse_line(lines, key)
         line = lines.find { |l| l.start_with?("#{key}:") }
-        line&.split("\t")&.last&.to_i || 0
+        (line&.split || [])[1]&.to_i || 0
       end
     end
   end
