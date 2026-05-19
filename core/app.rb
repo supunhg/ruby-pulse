@@ -19,6 +19,7 @@ require_relative "../collectors/thermal"
 require_relative "../collectors/network"
 require_relative "../collectors/power"
 require_relative "../collectors/container"
+require_relative "../collectors/disk"
 
 require_relative "../ui/application"
 
@@ -60,6 +61,7 @@ module RubyPulse
       @scheduler.register(Collectors::Network.new, interval: 2)
       @scheduler.register(Collectors::Power.new, interval: 5)
       @scheduler.register(Collectors::Container.new, interval: 10)
+      @scheduler.register(Collectors::Disk.new, interval: 3)
     end
 
     def load_rules

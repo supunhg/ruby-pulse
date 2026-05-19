@@ -6,11 +6,12 @@ require_relative "views/gpu"
 require_relative "views/network"
 require_relative "views/power"
 require_relative "views/diagnostics"
+require_relative "views/disk"
 
 module RubyPulse
   module UI
     class ApplicationWindow < Adw::ApplicationWindow
-      VIEW_KEYS = %i[overview processes memory cpu gpu network power diagnostics].freeze
+      VIEW_KEYS = %i[overview processes memory cpu gpu network power diagnostics disk].freeze
 
       def initialize(application, event_bus, state)
         super(application)
@@ -71,7 +72,8 @@ module RubyPulse
           gpu:         Views::Gpu.new(@event_bus, @state),
           network:     Views::Network.new(@event_bus, @state),
           power:       Views::Power.new(@event_bus, @state),
-          diagnostics: Views::Diagnostics.new(@event_bus, @state)
+          diagnostics: Views::Diagnostics.new(@event_bus, @state),
+          disk:        Views::Disk.new(@event_bus, @state)
         }
 
         @views.each do |key, view|
@@ -139,7 +141,7 @@ module RubyPulse
         elsif ctrl && keyval == Gdk::Keyval::KEY_i
           show_about
           true
-        elsif ctrl && keyval >= Gdk::Keyval::KEY_1 && keyval <= Gdk::Keyval::KEY_8
+        elsif ctrl && keyval >= Gdk::Keyval::KEY_1 && keyval <= Gdk::Keyval::KEY_9
           idx = keyval - Gdk::Keyval::KEY_1
           switch_to_view(VIEW_KEYS[idx]) if idx < VIEW_KEYS.size
           true
